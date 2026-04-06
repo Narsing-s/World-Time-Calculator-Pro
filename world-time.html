@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>World Time Calculator Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap
+
+<style>
+body{
+  font-family:Roboto, sans-serif;
+  margin:0;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#333;
+}
+.container{
+  max-width:950px;
+  margin:40px auto;
+  padding:25px;
+}
+.header{
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:#fff;
+  padding:18px 22px;
+  border-radius:16px;
+  margin-bottom:25px;
+}
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 12px 28px rgba(0,0,0,.2);
+  margin-bottom:20px;
+}
+.controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+select,input{
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  flex:1;
+}
+button{
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#3b82f6;
+  color:#fff;
+  cursor:pointer;
+}
+.clock{
+  font-size:22px;
+  font-weight:600;
+}
+.small{
+  font-size:14px;
+  color:#666;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="header">
+    <h2>🌍 World Time Calculator Pro</h2>
+    <small>Compare & Convert Time Across the World</small>
+  </div>
+
+  <!-- LIVE WORLD CLOCKS -->
+  <div class="card">
+    <h3>🕒 Current World Time</h3>
+    <div id="clocks"></div>
+  </div>
+
+  <!-- TIME CONVERTER -->
+  <div class="card">
+    <h3>🔄 Time Converter</h3>
+    <div class="controls">
+      <select id="fromZone"></select>
+      <select id="toZone"></select>
+      <input type="datetime-local" id="timeInput">
+      <button onclick="convertTime()">Convert</button>
+    </div>
+    <p id="result" class="clock"></p>
+  </div>
+
+</div>
+
+<script>
+const zones={
+  "Asia/Kolkata":"India (IST)",
+  "UTC":"UTC",
+  "America/New_York":"New York",
+  "Europe/London":"London",
+  "Europe/Paris":"Paris",
+  "Asia/Tokyo":"Tokyo",
+  "Australia/Sydney":"Sydney",
+  "Asia/Dubai":"Dubai"
+};
+
+const fromZone=document.getElementById("fromZone");
+const toZone=document.getElementById("toZone");
+
+Object.entries(zones).forEach(([z,n])=>{
+  fromZone.innerHTML+=`<option value="${z}">${n}</option>`;
+  toZone.innerHTML+=`<option value="${z}">${n}</option>`;
+});
+
+fromZone.value="Asia/Kolkata";
+
+function updateClocks(){
+  let html="";
+  Object.entries(zones).forEach(([z,n])=>{
+    const t=new Date().toLocaleString("en-US",{timeZone:z});
+    html+=`<p><b>${n}</b> → ${t}</p>`;
+  });
+  clocks.innerHTML=html;
+}
+setInterval(updateClocks,1000);
+updateClocks();
+
+function convertTime(){
+  const input=timeInput.value;
+  if(!input) return;
+  const date=new Date(input);
+  const target=new Intl.DateTimeFormat("en-US",{
+    timeZone:toZone.value,
+    dateStyle:"full",
+    timeStyle:"medium"
+  }).format(date);
+  result.innerText=`Converted Time: ${target}`;
+}
+</script>
+</body>
+</html>
