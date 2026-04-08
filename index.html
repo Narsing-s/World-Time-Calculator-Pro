@@ -2,63 +2,119 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>World Time Calculator Pro</title>
+<title>🌍 World Time Calculator Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box}
 body{
-  font-family:Roboto, sans-serif;
   margin:0;
+  font-family:Roboto,sans-serif;
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:#333;
-}
-.container{
-  max-width:950px;
-  margin:40px auto;
-  padding:25px;
-}
-.header{
-  background:linear-gradient(135deg,#667eea,#764ba2);
   color:#fff;
-  padding:18px 22px;
-  border-radius:16px;
-  margin-bottom:25px;
+  min-height:100vh;
 }
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:30px;
+}
+
+.header{
+  text-align:center;
+  padding:25px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+  animation:slideDown .8s ease;
+}
+
+@keyframes slideDown{
+  from{transform:translateY(-30px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+
 .card{
-  background:#fff;
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 12px 28px rgba(0,0,0,.2);
-  margin-bottom:20px;
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(14px);
+  padding:25px;
+  border-radius:20px;
+  margin-top:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,.35);
+  animation:fadeIn .8s ease;
 }
+
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(.95)}
+  to{opacity:1;transform:scale(1)}
+}
+
 .controls{
   display:flex;
-  gap:10px;
+  gap:12px;
   flex-wrap:wrap;
 }
+
 select,input{
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #ccc;
   flex:1;
-}
-button{
   padding:12px;
+  border-radius:12px;
   border:none;
-  border-radius:10px;
+  outline:none;
+  background:rgba(255,255,255,.9);
+  color:#333;
+}
+
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:12px;
   background:#3b82f6;
   color:#fff;
   cursor:pointer;
-}
-.clock{
-  font-size:22px;
   font-weight:600;
+  transition:.3s;
 }
-.small{
-  font-size:14px;
-  color:#666;
+
+button:hover{
+  background:#2563eb;
+  transform:scale(1.05);
 }
+
+.clock-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:15px;
+  max-height:420px;
+  overflow:auto;
+  padding-right:8px;
+}
+
+.clock{
+  padding:16px;
+  background:rgba(255,255,255,.85);
+  color:#000;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:500;
+  animation:pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse{
+  from{box-shadow:0 0 0 rgba(59,130,246,.4)}
+  to{box-shadow:0 0 20px rgba(59,130,246,.4)}
+}
+
+.result{
+  font-size:20px;
+  font-weight:600;
+  margin-top:15px;
+}
+
+small{opacity:.9}
 </style>
 </head>
 
@@ -66,74 +122,77 @@ button{
 <div class="container">
 
   <div class="header">
-    <h2>🌍 World Time Calculator Pro</h2>
-    <small>Compare & Convert Time Across the World</small>
+    <h1>🌍 World Time Calculator Pro</h1>
+    <small>Live Global Clock • Convert Any Country Time Instantly</small>
   </div>
 
-  <!-- LIVE WORLD CLOCKS -->
+  <!-- WORLD CLOCKS -->
   <div class="card">
-    <h3>🕒 Current World Time</h3>
-    <div id="clocks"></div>
+    <h2>🕒 Live World Time</h2>
+    <div id="clocks" class="clock-grid"></div>
   </div>
 
-  <!-- TIME CONVERTER -->
+  <!-- CONVERTER -->
   <div class="card">
-    <h3>🔄 Time Converter</h3>
+    <h2>🔄 Time Zone Converter</h2>
     <div class="controls">
       <select id="fromZone"></select>
       <select id="toZone"></select>
       <input type="datetime-local" id="timeInput">
       <button onclick="convertTime()">Convert</button>
     </div>
-    <p id="result" class="clock"></p>
+    <div id="result" class="result"></div>
   </div>
 
 </div>
 
 <script>
-const zones={
-  "Asia/Kolkata":"India (IST)",
-  "UTC":"UTC",
-  "America/New_York":"New York",
-  "Europe/London":"London",
-  "Europe/Paris":"Paris",
-  "Asia/Tokyo":"Tokyo",
-  "Australia/Sydney":"Sydney",
-  "Asia/Dubai":"Dubai"
-};
+const timeZones = Intl.supportedValuesOf("timeZone");
 
 const fromZone=document.getElementById("fromZone");
 const toZone=document.getElementById("toZone");
+const clocks=document.getElementById("clocks");
+const result=document.getElementById("result");
 
-Object.entries(zones).forEach(([z,n])=>{
-  fromZone.innerHTML+=`<option value="${z}">${n}</option>`;
-  toZone.innerHTML+=`<option value="${z}">${n}</option>`;
+timeZones.forEach(z=>{
+  fromZone.innerHTML+=`<option value="${z}">${z}</option>`;
+  toZone.innerHTML+=`<option value="${z}">${z}</option>`;
 });
 
 fromZone.value="Asia/Kolkata";
+toZone.value="UTC";
 
 function updateClocks(){
-  let html="";
-  Object.entries(zones).forEach(([z,n])=>{
-    const t=new Date().toLocaleString("en-US",{timeZone:z});
-    html+=`<p><b>${n}</b> → ${t}</p>`;
+  clocks.innerHTML="";
+  timeZones.slice(0,120).forEach(z=>{
+    const time=new Date().toLocaleString("en-US",{
+      timeZone:z,
+      dateStyle:"medium",
+      timeStyle:"medium"
+    });
+    clocks.innerHTML+=`
+      <div class="clock">
+        <b>${z}</b><br>${time}
+      </div>`;
   });
-  clocks.innerHTML=html;
 }
+
 setInterval(updateClocks,1000);
 updateClocks();
 
 function convertTime(){
-  const input=timeInput.value;
-  if(!input) return;
-  const date=new Date(input);
-  const target=new Intl.DateTimeFormat("en-US",{
+  if(!timeInput.value) return;
+  const date = new Date(timeInput.value);
+
+  const converted = new Intl.DateTimeFormat("en-US",{
     timeZone:toZone.value,
     dateStyle:"full",
-    timeStyle:"medium"
+    timeStyle:"long"
   }).format(date);
-  result.innerText=`Converted Time: ${target}`;
+
+  result.innerHTML=`✅ Converted Time:<br>${converted}`;
 }
 </script>
+
 </body>
 </html>
