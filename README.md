@@ -22,16 +22,21 @@ A modern, fast, and professional **World Clock + Time Zone Converter Web App** w
 ## 🖥️ UI Preview
 
 ### 🌍 Main Dashboard
-![Main Dashboard](assets/ui-dashboard.png)
+
+<img width="722" height="760" alt="image" src="https://github.com/user-attachments/assets/d749dd55-842a-4e5f-b409-be43180cb8b2" />
+
 
 ### 🕒 Live World Clocks
-![World Clocks](assets/ui-clocks.png)
+
+<img width="1437" height="697" alt="image" src="https://github.com/user-attachments/assets/401c58aa-8601-4908-9c6e-b84ac942575e" />
+
 
 ### 🔄 Time Converter
-![Time Converter](assets/ui-converter.png)
 
-### 🌙 Dark Mode View
-![Dark Mode](assets/ui-dark.png)
+<img width="1497" height="299" alt="image" src="https://github.com/user-attachments/assets/cd1ee530-eace-4ce0-81fd-6bb4ee808b96" />
+
+
+
 
 ---
 
