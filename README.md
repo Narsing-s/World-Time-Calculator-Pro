@@ -1,50 +1,45 @@
-# 🌍 World Time Calculator Pro
+# 🌍 World Time Pro
 
-A modern, fast, and professional **World Clock + Time Zone Converter Web App** with real-time updates, offline support (PWA), favorites system, and beautiful animated UI.
+A polished, responsive **world clock + timezone intelligence app** for people working across countries and time zones.
 
----
+**Live app:** https://world-time-calculator-pro.vercel.app  
+**Repository:** https://github.com/Narsing-s/World-Time-Calculator-Pro
 
-## 🚀 Live Features
+## ✨ What changed
 
-- 🌐 View 120+ global time zones
-- 🕒 Real-time live world clocks (auto-updating every second)
-- 🔄 Time zone converter with instant results
-- ⭐ Add/remove favorite time zones
-- 🔍 Smart search/filter for zones
-- 🌙 Day/Night indicator per region
-- 🌓 Dark / Light mode toggle
-- 📶 Online / Offline status detection
-- 📱 Progressive Web App (PWA support)
-- 💾 Local storage support (favorites + theme)
+- Premium glassmorphism dashboard with responsive mobile-first layout
+- Live local clock with current UTC offset
+- Search across the browser's IANA timezone database
+- Favorites with persistent localStorage
+- Day/night filters
+- Real-time clocks updated every second
+- Exact timezone conversion with source/target context
+- Quick time presets: now, next work hour, next midnight
+- One-click share / copy link
+- Dark/light mode persisted locally
+- Offline-ready PWA service worker
+- No API key, backend, database, or paid service required
 
----
+## 🧭 Use cases
 
-## 🖥️ UI Preview
+- Global engineering and production-support teams
+- Remote teams scheduling meetings
+- Travel and international communication
+- API/integration operations across regions
+- Developers validating timezone and DST behavior
 
-### 🌍 Main Dashboard
+## 🛠️ Architecture
 
-<img width="722" height="760" alt="image" src="https://github.com/user-attachments/assets/d749dd55-842a-4e5f-b409-be43180cb8b2" />
+This is intentionally lightweight: HTML/CSS/JavaScript using the browser's native Intl.DateTimeFormat and IANA timezone data. Favorites and preferences use localStorage.
 
+## 🚀 Deployment
 
-### 🕒 Live World Clocks
+The project is static and can be deployed directly to Vercel, GitHub Pages, Cloudflare Pages, Netlify, or any static host.
 
-<img width="1437" height="697" alt="image" src="https://github.com/user-attachments/assets/401c58aa-8601-4908-9c6e-b84ac942575e" />
+## 📱 PWA
 
+manifest.json and sw.js provide install/offline support. The app continues to work without an external time API.
 
-### 🔄 Time Converter
+## 📄 License
 
-<img width="1497" height="299" alt="image" src="https://github.com/user-attachments/assets/cd1ee530-eace-4ce0-81fd-6bb4ee808b96" />
-
-
-
-
----
-
-## 🎨 UI Highlights
-
-- Glassmorphism card design
-- Smooth animations & hover effects
-- Gradient animated background
-- Responsive grid layout (mobile + desktop)
-- Professional SaaS-style interface
-
+MIT
